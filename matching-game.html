@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matching Game</title>
+    <style>
+         body {
+            height: 200px;
+            background-color: rgb(17, 0, 255); /* For browsers that do not support gradients */
+            background-image: linear-gradient(to bottom right, rgb(10, 10, 10), rgb(184, 192, 199));
+        }
+
+        h1 {
+            color: yellow;
+            text-align: center;
+        }
+
+        p{
+            color: yellow;
+            text-align: center;
+            font-weight: bolder;
+            font-size: 24px;
+        }
+
+        button {
+        float: left;
+        background-color: #545058;
+        border-radius: 10px;
+        border: 4px double #cccccc;
+        color: #e70707;
+        text-align: center;
+        height: 60px;
+        cursor: url("images/redLight.png"), auto;
+        }
+
+        input {
+        float: right;
+        background-color: #545058;
+        border-radius: 10px;
+        border: 4px double #cccccc;
+        color: #0a15a3;
+        text-align: center;
+        height: 60px;
+        cursor: url("images/blueLight.png"), auto;
+        }
+
+        img {
+            position: absolute;
+
+        }
+
+        div {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+        }
+
+        #rightSide {
+            left: 500px;
+            border-left: 1px solid;
+        }
+
+
+    </style>
+</head>
+
+<body id="theBody" onload="generateFaces()">
+    <input id="restart" type="button" value="Restart Game" onclick="newGame()">
+    <button onclick="sithLevel()" value="Restart Game">Sith Level Difficulty</button>
+    <h1>Matching Game</h1>
+     <p>Click on the extra baby Yoda to the left. <br>
+        If you want a more difficult challenge, click the button to the left. <br>
+       And may the force be with you! <br>
+        </p>
+    <div id="leftSide"></div>
+    <div id="rightSide"></div>
+    <script>
+        function sithLevel() {
+             event.stopPropagation();
+            document.body.style.backgroundImage = 'url(images/forrestSW.png)'; 
+            }
+        let numberOfFaces = 5;
+        const theLeftSide = document.getElementById('leftSide');
+        const theRightSide = document.getElementById('rightSide');
+            function generateFaces() {
+                while(document.getElementById("leftSide").firstChild) {
+                   document.getElementById("leftSide").removeChild(document.getElementById("leftSide").firstChild);
+                }
+                while(document.getElementById("rightSide").firstChild) {
+                   document.getElementById("rightSide").removeChild(document.getElementById("rightSide").firstChild);
+                }
+                for(let i=1; i<=numberOfFaces; i++) {
+                    let randomTop = Math.floor(Math.random()*(400)) + "px";
+                    let randomLeft = Math.floor(Math.random()*(400)) + "px" ;
+                    let face = document.createElement('img');
+                    face.src = "images/babyYoda.png";
+                    face.style.left = randomLeft;                
+                    face.style.top = randomTop;
+                    document.getElementById("leftSide").appendChild(face);
+                    
+                }
+                let theRightSide = document.getElementById("rightSide");
+                let cln = leftSide.cloneNode(true);
+                let lastChildNode = cln.lastChild;
+                cln.removeChild(lastChildNode);
+                document.getElementById("rightSide").appendChild(cln);
+                let theBody = document.getElementsByTagName("body")[0];
+                document.getElementById("leftSide").lastChild.onclick = function nextLevel(event) {
+                    event.stopPropagation();
+                    numberOfFaces += 5;
+
+                    generateFaces();
+                }
+                theBody.onclick = function newGame() {
+                    alert("Game Over!");
+                    theBody.onclick = null;
+                    document.getElementById("leftSide").lastChild.onclick=null;
+                }
+                restart.onclick = function newGame() {
+                     event.stopPropagation();
+                    location.reload(true);
+            }
+            
+            }
+        
+    </script>
+</body>
+</html>
